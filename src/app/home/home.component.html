@@ -1,0 +1,42 @@
+<bootstrap-panel>
+    <ng-container class="heading">Angular</ng-container>
+    <ng-container class="body">
+        <ul class="nav nav-pills">          
+            <li [class.active]="viewMode == 'courses'">
+                <a href="#" (click)="viewMode= 'courses'">Courses</a>
+            </li>
+            <li [class.active]="viewMode == 'authors'">
+                <a href="#" (click)="viewMode= 'authors'">Authors</a>
+            </li>
+            <li [class.active]="viewMode == 'tweets'">
+                <a href="#" (click)="viewMode= 'tweets'">Tweets</a>
+            </li>
+            <li [class.active]="viewMode == 'movies'">
+                <a href="#" (click)="viewMode= 'movies'">Movies</a>
+            </li>
+            <li [class.active]="viewMode == 'contact'">
+                <a href="#" (click)="viewMode= 'contact'">Contact Form</a>
+            </li>
+        </ul>
+        <div [ngSwitch]="viewMode">
+            <div *ngSwitchCase="'courses'">
+                <courses></courses>
+            </div>
+            <div *ngSwitchCase="'authors'">
+                <authors></authors>
+            </div>
+            <div *ngSwitchCase="'tweets'">
+                <tweet></tweet>
+            </div>
+            <div *ngSwitchCase="'movies'">
+                <movies></movies>
+            </div>
+            <div *ngSwitchCase="'contact'">
+                <contact-form></contact-form>
+            </div>      
+            <div *ngSwitchDefault>
+                Otherwise
+            </div>
+        </div>
+    </ng-container>
+</bootstrap-panel>

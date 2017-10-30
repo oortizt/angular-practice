@@ -1,0 +1,42 @@
+<div>
+    <h2>{{ getTitle() | summary:57 }}</h2>
+    <div *ngIf="courses.length > 0; then coursesList else noCourses"></div>
+    <ng-template #coursesList>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th>Nombre</th>
+                    <th>Cupos</th>
+                    <th>Precio</th>
+                    <th>Calificación</th>
+                    <th>Profesor</th>
+                    <th>Fecha de inicio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of courses; index as i; trackBy: trackCourse">
+                    <td class="text-center">{{ i + 1 }}</td>
+                    <td>{{ course.name | uppercase }}</td>
+                    <td>{{ course.seat | number }}</td>
+                    <td>{{ course.price | currency:'USD':true:'1.2-2' }}</td>
+                    <td>{{ course.rating | number:'1.2-2' }}</td>
+                    <td><span [hidden]="!isStarted(course)">{{ course.releaseDate | date:'shortDate' }}</span></td>
+                    <td>{{ course.teacher?.name }}</td><!-- Safe transversal operation -->
+                    <td>
+                        <favorite [is-favorite]="course.isFavorite" (change)="onFavoriteChanged($event)" ></favorite>
+                        <button class="btn btn-mini btn-danger" (click)="onRemove(course)">x</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-template>
+    <ng-template #noCourses>
+        <span class="label label-warning">No courses yet</span>
+    </ng-template>
+    <button class="btn btn-primary" 
+        [class.active]="isActive" 
+        [style.backgroundColor]="isActive ? 'blue' : 'green'"
+        (click)="onAdd($event)">Add</button>
+</div>

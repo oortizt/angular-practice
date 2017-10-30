@@ -1,0 +1,8 @@
+<zippy title="{{ title }}">
+    <input [(ngModel)]="titleMovie" (keyup.enter)="onKeyUp()"/> <br/>
+    <span>{{ titleMovie | titlecasting }}</span> <br/><br/>
+</zippy> 
+
+<zippy title="Input-Format Directive">
+    <input type="text" [appInputFormat]="'lowercase'"/>
+</zippy>

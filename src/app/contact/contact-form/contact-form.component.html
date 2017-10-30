@@ -1,0 +1,71 @@
+<form #f="ngForm" (ngSubmit)="submit(f);">
+  <div ngModelGroup="contact" #contact="ngModelGroup">
+      <div class="alert alert-danger" *ngIf="contact.touched && !contact.valid">Errors in contact group</div>
+      <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input 
+            ngModel 
+            name="firstName" 
+            required 
+            minlength="3" 
+            maxlength="10" 
+            pattern="banana" 
+            id="firstName" 
+            #firstName="ngModel"
+            class="form-control" 
+            type="text" 
+            (change)="log(firstName);">
+          <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+            <div *ngIf="firstName.errors.required">
+              First Name is required
+            </div>
+            <div *ngIf="firstName.errors.minlength">
+              First Name must have at least {{ firstName.errors.minlength.requiredLength }} characters
+            </div>
+            <div *ngIf="firstName.errors.pattern">
+              First Name does not match the pattern
+            </div>
+          </div>
+        </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea 
+      ngModel 
+      name="comment" 
+      id="comment" 
+      class="form-control" 
+      cols="30" 
+      rows="10">
+    </textarea>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input 
+        ngModel
+        name="isSubscribed"
+        type="checkbox"> Subscribe to mailing list
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select required ngModel #contactMethod="ngModel" name="contactMethod" id="contactMethod" class="form-control">
+      <option value=""></option>
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.name }}</option>
+    </select>
+    <div class="alert alert-danger" *ngIf="contactMethod.touched && contactMethod.invalid">Contact Method is required</div>
+  </div>
+  <div *ngFor="let method of contactMethods" class="radio">
+    <label>
+      <input ngModel name="contactMethod" type="radio" [value]="method.id">
+      {{ method.name | uppercase }}
+    </label>
+  </div>
+  {{ f.value | json }} <br>
+  <button 
+    class="btn btn-primary"
+    [disabled]="!f.valid">
+    Submit
+  </button>
+</form>
